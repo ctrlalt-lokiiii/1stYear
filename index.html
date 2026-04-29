@@ -3,21 +3,43 @@
 <head>
   <title>Our 1 Year Garden 🌸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
-
 <!-- 🚲 BIKE SCENE -->
 <div id="bikeScene" class="scene active">
+  <!-- Wind curves -->
+  <div class="wind-curve"></div>
+  <div class="wind-curve"></div>
+  <div class="wind-curve"></div>
+  
+  <!-- Road line -->
+  <div class="road-line"></div>
+  
+  <!-- Bike -->
   <div class="bike">🚲</div>
-  <p id="startText">Tap to go to Garden</p>
-  <div class="wind"></div>
+  
+  <!-- Start text -->
+  <p id="startText">Tap bike to enter our garden</p>
+</div>
+
+<!-- 🏢 MOVING BUILDINGS (dynamically created) -->
+<div id="buildingsContainer"></div>
+
+<!-- 🏠 COTTAGE (dynamically created) -->
+<div id="cottageContainer"></div>
+
+<!-- 🌑 WELCOME SCREEN -->
+<div id="welcomeScene" class="scene">
+  <div>Welcome to our Garden</div>
 </div>
 
 <!-- 🌸 GARDEN -->
 <div id="gardenScene" class="scene">
-  <div class="roof"></div>
+  <div class="roof-container">
+    <div class="roof"></div>
+  </div>
   <div class="flowers" id="flowerGrid"></div>
 </div>
 
