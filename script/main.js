@@ -19,7 +19,7 @@ const keys = [
 const emojis = ["🤍","🌹","🌷","🌼","💜","🌸","🤍","🔵","🌺","🌷","🌸","🟡","🌻"];
 
 // 🚲 BIKE CLICK
-bikeScene.addEventListener("click", () => {
+document.querySelector(".bike").addEventListener("click", () => {
   document.querySelector(".bike").style.transform = "translateX(200px)";
   setTimeout(()=>{
     bikeScene.classList.remove("active");
