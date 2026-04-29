@@ -20,15 +20,42 @@ body {
 
 /* 🚲 BIKE */
 .bike {
-  width: 100px;
-  height: 50px;
-  background: black;
-  border-radius: 10px;
+  width: 120px;
+  height: 60px;
   position: absolute;
-  bottom: 60px;
-  transition: transform 3s linear;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
+/* wheels */
+.bike::before,
+.bike::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 4px solid black;
+  border-radius: 50%;
+  bottom: 0;
+}
+
+.bike::before {
+  left: 0;
+}
+
+.bike::after {
+  right: 0;
+}
+
+/* frame */
+.bike div {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: black;
+  top: 20px;
+}
 #startText {
   position: absolute;
   bottom: 10px;
