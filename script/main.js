@@ -1,110 +1,97 @@
-// Animation Timeline
-const animationTimeline = () => {
-  // Spit chars that needs to be animated individually
-  const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
-  const hbd = document.getElementsByClassName("wish-hbd")[0];
+const bikeScene = document.getElementById("bikeScene");
+const gardenScene = document.getElementById("gardenScene");
+const letterScene = document.getElementById("letterScene");
 
-  textBoxChars.innerHTML = `<span>${textBoxChars.innerHTML
-    .split("")
-    .join("</span><span>")}</span`;
+const grid = document.getElementById("flowerGrid");
+const letterContent = document.getElementById("letterContent");
+const backBtn = document.getElementById("backBtn");
 
-  hbd.innerHTML = `<span>${hbd.innerHTML
-    .split("")
-    .join("</span><span>")}</span`;
+let opened = new Set();
 
-  const ideaTextTrans = {
-    opacity: 0,
-    y: -20,
-    rotationX: 5,
-    skewX: "15deg",
-  };
+// 🌸 FLOWER ORDER (UPDATED)
+const keys = [
+  "whiteRose","rose","tulip","daisy","lavender",
+  "cherryBlossom","lily","bluebell","hibiscus",
+  "peony","orchid","marigold","sunflower"
+];
 
-  const ideaTextTransLeave = {
-    opacity: 0,
-    y: 20,
-    rotationY: 5,
-    skewX: "-15deg",
-  };
+// 🌸 FLOWER EMOJIS
+const emojis = ["🤍","🌹","🌷","🌼","💜","🌸","🤍","🔵","🌺","🌷","🌸","🟡","🌻"];
 
-  const tl = new TimelineMax();
+// 🚲 BIKE CLICK
+bikeScene.addEventListener("click", () => {
+  document.querySelector(".bike").style.transform = "translateX(200px)";
+  setTimeout(()=>{
+    bikeScene.classList.remove("active");
+    gardenScene.classList.add("active");
+  },3000);
+});
 
-  tl.to(".container", 0.1, {
-    visibility: "visible",
-  })
-    .from(".one", 0.7, {
-      opacity: 0,
-      y: 10,
-    })
-    .from(".two", 0.4, {
-      opacity: 0,
-      y: 10,
-    })
-    .to(
-      ".one",
-      0.7,
-      {
-        opacity: 0,
-        y: 10,
-      },
-      "+=2.5"
-    )
-    .to(
-      ".two",
-      0.7,
-      {
-        opacity: 0,
-        y: 10,
-      },
-      "-=1"
-    )
-    .from(".three", 0.7, {
-      opacity: 0,
-      y: 10,
-      // scale: 0.7
-    })
-    .to(
-      ".three",
-      0.7,
-      {
-        opacity: 0,
-        y: 10,
-      },
-      "+=2"
-    )
-    .from(".four", 0.7, {
-      scale: 0.2,
-      opacity: 0,
-    })
-    .from(".fake-btn", 0.3, {
-      scale: 0.2,
-      opacity: 0,
-    })
-    .staggerTo(
-      ".hbd-chatbox span",
-      0.5,
-      {
-        visibility: "visible",
-      },
-      0.05
-    )
-    .to(".fake-btn", 0.1, {
-      backgroundColor: "rgb(127, 206, 248)",
-    })
-    .to(
-      ".four",
-      0.5,
-      {
-        scale: 0.2,
-        opacity: 0,
-        y: -150,
-      },
-      "+=0.7"
-    )
-    .from(".idea-1", 0.7, ideaTextTrans)
-    .to(".idea-1", 0.7, ideaTextTransLeave, "+=1.5")
-    .from(".idea-2", 0.7, ideaTextTrans)
-    .to(".idea-2", 0.7, ideaTextTransLeave, "+=1.5")
-    .from(".idea-3", 0.7, ideaTextTrans)
+// 🌸 CREATE FLOWERS
+keys.forEach((key, index)=>{
+  const f = document.createElement("div");
+  f.classList.add("flower");
+  f.innerText = emojis[index];
+
+  if(index === 12){
+    f.classList.add("locked","glow");
+  }
+
+  f.onclick = () => openFlower(index);
+
+  grid.appendChild(f);
+});
+
+// 💌 LETTERS (PASTE YOUR FULL TEXTS HERE)
+const letters = {
+  whiteRose: `<h2>1ST MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  rose: `<h2>2ND MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  tulip: `<h2>3RD MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  daisy: `<h2>4TH MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  lavender: `<h2>5TH MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  cherryBlossom: `<h2>6TH MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  lily: `<h2>7TH MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  bluebell: `<h2>8TH MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  hibiscus: `<h2>9TH MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  peony: `<h2>10TH MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  orchid: `<h2>11TH MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  marigold: `<h2>12TH MONTH</h2><p>PASTE YOUR FULL TEXT HERE</p>`,
+  sunflower: `
+    <h2 style="text-align:center;">🌻 Final Message</h2>
+    <p>PASTE YOUR FINAL MESSAGE HERE</p>
+    <p style="margin-top:20px; font-size:12px; opacity:0.6;">
+    🔒 This flower only bloomed after you opened all the others.
+    </p>
+  `
+};
+
+// 🌼 OPEN FLOWER
+function openFlower(index){
+
+  if(index === 12 && opened.size < 12){
+    alert("Open all flowers first 🌸");
+    return;
+  }
+
+  opened.add(index);
+
+  bikeScene.classList.remove("active");
+  gardenScene.classList.remove("active");
+  letterScene.classList.add("active");
+
+  letterContent.innerHTML = letters[keys[index]];
+
+  // 🔓 UNLOCK FINAL
+  if(opened.size === 12){
+    document.querySelectorAll(".flower")[12].classList.remove("locked");
+  }
+}
+
+// 🔙 BACK
+backBtn.onclick = ()=>{
+  letterScene.classList.remove("active");
+  gardenScene.classList.add("active");
+};    .from(".idea-3", 0.7, ideaTextTrans)
     .to(".idea-3 strong", 0.5, {
       scale: 1.2,
       x: 10,
