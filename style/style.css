@@ -1,9 +1,8 @@
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #f5e6c8 0%, #e8d5b7 100%);
+  font-family: Arial;
+  background: #f5e6c8;
   overflow: hidden;
-  user-select: none;
 }
 
 /* scenes */
@@ -14,245 +13,115 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  position: relative;
 }
 
 .scene.active {
   display: flex;
 }
 
-/* 🚲 ROAD & BIKE */
-#bikeScene {
-  background: linear-gradient(to bottom, #87CEEB 0%, #98D8C8 70%, #4A7C59 100%);
-}
-
-.road {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 120px;
-  background: repeating-linear-gradient(
-    90deg,
-    #333 0px,
-    #333 30px,
-    #555 30px,
-    #555 60px
-  );
-  animation: roadMove 3s linear infinite;
-}
-
-@keyframes roadMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 60px 0; }
-}
-
+/* 🚲 BIKE */
 .bike {
-  font-size: 90px;
+  font-size: 60px;
   position: absolute;
-  bottom: 140px;
+  bottom: 100px;
   left: 50%;
-  transform: translateX(-50%) scaleX(-1); /* Mirror to face right */
+  transform: translateX(-50%);
   cursor: pointer;
-  z-index: 20;
-  transition: all 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-}
-
-.bike.moving {
-  transform: translateX(400px) scaleX(-1) !important;
+  z-index: 10;
+  transition: transform 3s linear;
 }
 
 #startText {
   position: absolute;
   bottom: 30px;
-  font-size: 18px;
-  color: #333;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
   animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.05); }
+  0% {opacity: 1;}
+  50% {opacity: 0.4;}
+  100% {opacity: 1;}
+}
+
+/* 🌬️ WIND */
+.wind::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  top: 50%;
+  background: rgba(0,0,0,0.1);
+  animation: windMove 2s linear infinite;
+}
+
+@keyframes windMove {
+  from {transform: translateX(100%);}
+  to {transform: translateX(-100%);}
 }
 
 /* 🌸 GARDEN */
-#gardenScene {
-  background: linear-gradient(to bottom, #87CEEB 0%, #98D8C8 40%, #4A7C59 100%);
-}
-
-.roof-container {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 280px;
-}
-
 .roof {
-  width: 0;
-  height: 0;
-  border-left: 140px solid transparent;
-  border-right: 140px solid transparent;
-  border-bottom: 60px solid #8B4513;
-  position: relative;
-}
-
-.roof::before {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: -138px;
-  width: 276px;
-  height: 4px;
-  background: #A0522D;
-  border-radius: 2px;
+  width: 200px;
+  height: 50px;
+  background: #8b5a2b;
+  margin-bottom: 20px;
 }
 
 .flowers {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-  padding: 100px 20px 40px;
-  max-width: 400px;
-  width: 100%;
+  gap: 20px;
 }
 
 .flower {
-  background: linear-gradient(145deg, #ffccd5, #ffb3d1);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 70px;
+  height: 70px;
+  background: pink;
+  border-radius: 50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 15px 10px 20px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  position: relative;
-  overflow: hidden;
-}
-
-.flower::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 20px;
-  background: linear-gradient(to top, #4A7C59, transparent);
-  border-radius: 0 0 50% 50%;
-}
-
-.flower:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  transition: transform 0.2s;
+  font-size: 28px;
 }
 
 .flower:active {
-  transform: translateY(-5px) scale(1.1);
-}
-
-.flower-emoji {
-  font-size: 32px;
-  z-index: 2;
-  position: relative;
-}
-
-.flower-label {
-  margin-top: 5px;
-  font-size: 10px;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
-  z-index: 2;
-  position: relative;
-  text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+  transform: scale(1.2);
 }
 
 .locked {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.locked::after {
-  content: '🔒';
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  font-size: 20px;
-  animation: lockPulse 1.5s infinite;
-}
-
-@keyframes lockPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  opacity: 0.4;
 }
 
 .glow {
-  animation: flowerGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes flowerGlow {
-  from { box-shadow: 0 8px 25px rgba(0,0,0,0.15), 0 0 20px rgba(255,182,209,0.4); }
-  to { box-shadow: 0 12px 35px rgba(0,0,0,0.25), 0 0 40px rgba(255,182,209,0.8); }
+  box-shadow: 0 0 20px rgba(255, 200, 200, 0.8);
 }
 
 /* 💌 LETTER */
 #letterScene {
-  background: linear-gradient(135deg, #fff 0%, #f8f1f1 100%);
+  background: white;
 }
 
 #letterContent {
-  padding: 40px 30px;
+  padding: 20px;
   max-height: 80vh;
   overflow-y: auto;
-  animation: fadeSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  max-width: 400px;
-  width: 90%;
+  animation: unfold 0.5s ease;
 }
 
-@keyframes fadeSlideIn {
-  from { 
-    opacity: 0; 
-    transform: translateY(30px) scale(0.95); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0) scale(1); 
-  }
-}
-
-#letterContent h2 {
-  color: #d63384;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
-  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-}
-
-#letterContent p {
-  line-height: 1.6;
-  color: #333;
-  font-size: 16px;
+@keyframes unfold {
+  from {transform: scaleY(0);}
+  to {transform: scaleY(1);}
 }
 
 #backBtn {
   position: absolute;
   top: 20px;
   left: 20px;
-  background: linear-gradient(145deg, #ff8c42, #ff6b35);
+  background: orange;
   border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 20px;
+  padding: 10px;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(255,108,53,0.4);
-  transition: all 0.3s ease;
-}
-
-#backBtn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 8px 25px rgba(255,108,53,0.6);
 }
