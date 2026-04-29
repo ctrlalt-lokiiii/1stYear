@@ -1,95 +1,183 @@
 const bikeScene = document.getElementById("bikeScene");
 const gardenScene = document.getElementById("gardenScene");
 const letterScene = document.getElementById("letterScene");
+const welcomeScene = document.getElementById("welcomeScene");
+const buildingsContainer = document.getElementById("buildingsContainer");
+const cottageContainer = document.getElementById("cottageContainer");
 
 const grid = document.getElementById("flowerGrid");
 const letterContent = document.getElementById("letterContent");
 const backBtn = document.getElementById("backBtn");
 
 let opened = new Set();
+let journeyStarted = false;
+let gameState = 'waiting'; // waiting, bikeMoving, buildings, cottage, fadeBlack, showWelcome, garden
 
-// 🌸 ORDER
-const keys = [
-  "whiteRose","rose","tulip","daisy","lavender",
-  "cherryBlossom","lily","bluebell","hibiscus",
-  "peony","orchid","marigold","sunflower"
+// 🌸 FLOWER DATA
+const flowers = [
+  { key: "whiteRose", emoji: "🤍", label: "White Rose" },
+  { key: "rose", emoji: "🌹", label: "Rose" },
+  { key: "tulip", emoji: "🌷", label: "Tulip" },
+  { key: "daisy", emoji: "🌼", label: "Daisy" },
+  { key: "lavender", emoji: "💜", label: "Lavender" },
+  { key: "cherryBlossom", emoji: "🌸", label: "Cherry Blossom" },
+  { key: "lily", emoji: "🤍", label: "Lily" },
+  { key: "bluebell", emoji: "🔵", label: "Bluebell" },
+  { key: "hibiscus", emoji: "🌺", label: "Hibiscus" },
+  { key: "peony", emoji: "🌷", label: "Peony" },
+  { key: "orchid", emoji: "🌸", label: "Orchid" },
+  { key: "marigold", emoji: "🟡", label: "Marigold" },
+  { key: "sunflower", emoji: "🌻", label: "Sunflower" }
 ];
 
-// 🌸 EMOJIS
-const emojis = ["🤍","🌹","🌷","🌼","💜","🌸","🤍","🔵","🌺","🌷","🌸","🟡","🌻"];
-
-// 🚲 CLICK BIKE
+// 🚲 COMPLETE JOURNEY SEQUENCE
 document.querySelector(".bike").addEventListener("click", () => {
-  document.querySelector(".bike").style.transform =
-    "translateX(300px)";
-
-  setTimeout(()=>{
-    bikeScene.classList.remove("active");
-    gardenScene.classList.add("active");
-  },3000);
+  if (journeyStarted || gameState !== 'waiting') return;
+  journeyStarted = true;
+  gameState = 'bikeMoving';
+  
+  const bike = document.querySelector(".bike");
+  const startText = document.getElementById("startText");
+  
+  // Hide start text
+  startText.style.opacity = '0';
+  
+  // Step 1: Bike moves right
+  bike.classList.add("move-right");
+  
+  setTimeout(() => {
+    gameState = 'buildings';
+    bike.classList.remove("move-right");
+    bike.classList.add("center-moving");
+    createBuildings();
+  }, 1500);
+  
+  setTimeout(() => {
+    gameState = 'cottage';
+    createCottage();
+  }, 2500);
+  
+  // 🚀 FIXED: Trigger fade sequence when cottage arrives
+  setTimeout(() => {
+    gameState = 'fadeBlack';
+    triggerFadeSequence();
+  }, 4500);
 });
 
-// 🌸 CREATE FLOWERS
-keys.forEach((key, index)=>{
-  const f = document.createElement("div");
-  f.classList.add("flower");
-  f.innerText = emojis[index];
-
-  if(index === 12){
-    f.classList.add("locked","glow");
-  }
-
-  f.onclick = () => openFlower(index);
-
-  grid.appendChild(f);
-});
-
-// 💌 LETTERS (PUT YOUR TEXT HERE)
-const letters = {
-  whiteRose: `<h2>1ST MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  rose: `<h2>2ND MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  tulip: `<h2>3RD MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  daisy: `<h2>4TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  lavender: `<h2>5TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  cherryBlossom: `<h2>6TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  lily: `<h2>7TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  bluebell: `<h2>8TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  hibiscus: `<h2>9TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  peony: `<h2>10TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  orchid: `<h2>11TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  marigold: `<h2>12TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  sunflower: `
-    <h2 style="text-align:center;">🌻 Final Message</h2>
-    <p>PASTE FINAL MESSAGE</p>
-    <p style="margin-top:20px; font-size:12px; opacity:0.6;">
-    🔒 Unlock after opening all flowers
-    </p>
-  `
-};
-
-// 🌸 OPEN FLOWER
-function openFlower(index){
-
-  if(index === 12 && opened.size < 12){
-    alert("Open all flowers first 🌸");
-    return;
-  }
-
-  opened.add(index);
-
-  bikeScene.classList.remove("active");
-  gardenScene.classList.remove("active");
-  letterScene.classList.add("active");
-
-  letterContent.innerHTML = letters[keys[index]];
-
-  if(opened.size === 12){
-    document.querySelectorAll(".flower")[12].classList.remove("locked");
+function createBuildings() {
+  buildingsContainer.innerHTML = '';
+  for (let i = 0; i < 3; i++) {
+    const building = document.createElement('div');
+    building.className = 'building';
+    buildingsContainer.appendChild(building);
   }
 }
 
-// 🔙 BACK
-backBtn.onclick = ()=>{
-  letterScene.classList.remove("active");
-  gardenScene.classList.add("active");
-};
+function createCottage() {
+  cottageContainer.innerHTML = '';
+  const cottage = document.createElement('div');
+  cottage.className = 'cottage';
+  cottage.innerHTML = `
+    <div class="cottage-roof"></div>
+    <div class="cottage-body">
+      <div class="cottage-window left"></div>
+      <div class="cottage-window right"></div>
+      <div class="cottage-door"></div>
+    </div>
+  `;
+  cottageContainer.appendChild(cottage);
+}
+
+// 🚀 FIXED: Complete fade sequence
+function triggerFadeSequence() {
+  // Step 1: Fade bike scene to black
+  document.body.style.transition = 'opacity 2s ease-out';
+  document.body.style.opacity = '0';
+  
+  setTimeout(() => {
+    // Step 2: Show welcome scene
+    bikeScene.classList.remove('active');
+    welcomeScene.classList.add('active');
+    gameState = 'showWelcome';
+    
+    setTimeout(() => {
+      // Step 3: Welcome fades out, show garden
+      welcomeScene.classList.remove('active');
+      gardenScene.classList.add('active');
+      document.body.style.opacity = '1';
+      gameState = 'garden';
+      initGarden();
+    }, 4000); // Welcome shows for 4 seconds
+  }, 2000); // Black fade takes 2 seconds
+}
+
+// 🌸 GARDEN INIT
+function initGarden() {
+  grid.innerHTML = '';
+  flowers.forEach((flower, index) => {
+    const flowerDiv = document.createElement('div');
+    flowerDiv.className = `flower ${opened.has(flower.key) ? '' : 'locked'}`;
+    flowerDiv.innerHTML = `
+      <div class="flower-circle">${flower.emoji}</div>
+      <div class="flower-label">${flower.label}</div>
+      ${flower.key === 'sunflower' ? '<div class="sunflower-note">Our 1st year together 🌻</div>' : ''}
+    `;
+    flowerDiv.addEventListener('click', () => openFlower(flower, index));
+    grid.appendChild(flowerDiv);
+  });
+}
+
+function openFlower(flower, index) {
+  if (opened.has(flower.key)) return;
+  
+  opened.add(flower.key);
+  gardenScene.classList.remove('active');
+  letterScene.classList.add('active');
+  
+  const messages = [
+    "Our first year has been magical 🌸",
+    "Every moment with you feels like a dream 💕",
+    "Thank you for filling my life with love 🌹",
+    "Here's to many more beautiful years together 💜",
+    "You make every day feel like spring 🌷",
+    "My heart blooms wherever you are 🌸",
+    "One year down, forever to go 💍",
+    "You're my favorite kind of magic ✨",
+    "Love grows stronger every day 🌻",
+    "Thank you for being my everything 💖",
+    "Our love story is just beginning 📖",
+    "You make my world so much brighter ☀️",
+    "One year of the best memories ever 🥰"
+  ];
+  
+  letterContent.innerHTML = `
+    <div style="text-align: center; margin-bottom: 30px;">
+      <div style="font-size: 48px; margin-bottom: 20px;">${flower.emoji}</div>
+      <h2>${flower.label}</h2>
+    </div>
+    <p style="font-style: italic; text-align: center;">${messages[index]}</p>
+    <div style="text-align: center; margin-top: 30px; font-size: 14px; color: #8B4513;">
+      With all my love 💕
+    </div>
+  `;
+}
+
+backBtn.addEventListener('click', () => {
+  letterScene.classList.remove('active');
+  if (opened.size === flowers.length) {
+    // All flowers opened - show completion
+    letterContent.innerHTML = `
+      <div style="text-align: center;">
+        <div style="font-size: 60px; margin: 30px 0;">🌈✨</div>
+        <h2>You found all the flowers! 🌸</h2>
+        <p>Our love story continues...</p>
+        <div style="font-size: 14px; color: #8B4513; margin-top: 30px;">
+          Happy 1st Anniversary 💕
+        </div>
+      </div>
+    `;
+  } else {
+    initGarden();
+    gardenScene.classList.add('active');
+  }
+});
