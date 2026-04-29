@@ -1,111 +1,128 @@
-html {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
-  font-family: "Work Sans", sans-serif;
-}
-
-.container {
-  height: 100vh;
-  width: 100vh;
-  margin: 0 auto;
-  text-align: center;
-  visibility: hidden;
-  position: relative;
+  font-family: Arial;
+  background: #f5e6c8;
   overflow: hidden;
 }
 
-.container div.six {
-  top: 10vh;
-  z-index: 1;
-}
-
-.container div.seven,
-.container div.eight {
-  width: 100vw;
+.scene {
+  display: none;
   height: 100vh;
-  position: fixed;
-  top: 0;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.container > div {
+.scene.active {
+  display: flex;
+}
+
+/* 🚲 BIKE */
+.bike {
+  width: 100px;
+  height: 50px;
+  background: black;
+  border-radius: 10px;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 20vh;
+  bottom: 60px;
+  transition: transform 3s linear;
 }
 
-.one {
-  font-size: 4.5rem;
+#startText {
+  position: absolute;
+  bottom: 10px;
+  animation: pulse 1.5s infinite;
 }
 
-.one > img {
-  vertical-align: middle;
-  margin-bottom: 10px;
-  max-width: 100%;
-  height: auto;
+@keyframes pulse {
+  0% {opacity: 1;}
+  50% {opacity: 0.4;}
+  100% {opacity: 1;}
 }
 
-.two {
-  font-size: 1.2rem;
-  font-weight: lighter;
+/* 🌬️ WIND */
+.wind::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  top: 50%;
+  background: rgba(0,0,0,0.1);
+  animation: windMove 2s linear infinite;
 }
 
-.three {
-  font-size: 3rem;
+@keyframes windMove {
+  from {transform: translateX(100%);}
+  to {transform: translateX(-100%);}
 }
 
-.four .text-box {
-  width: 600px;
-  margin: 0 auto;
-  border: 3px solid #aaa;
-  border-radius: 5px;
+/* 🌸 GARDEN */
+.roof {
+  width: 200px;
+  height: 50px;
+  background: #8b5a2b;
+  margin-bottom: 20px;
+}
+
+.flowers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.flower {
+  width: 60px;
+  height: 60px;
+  background: pink;
+  border-radius: 50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  font-size: 24px;
+}
+
+.flower:active {
+  transform: scale(1.2);
+}
+
+.locked {
+  opacity: 0.4;
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(255, 200, 200, 0.8);
+}
+
+/* 💌 LETTER */
+#letterScene {
+  background: white;
+}
+
+#letterContent {
+  padding: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: unfold 0.5s ease;
+}
+
+@keyframes unfold {
+  from {transform: scaleY(0);}
+  to {transform: scaleY(1);}
+}
+
+#backBtn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: orange;
+  border: none;
+  border-radius: 50%;
   padding: 10px;
-  position: relative;
-}
-
-.text-box p {
-  margin: 0;
-  text-align: left;
-}
-
-.text-box span {
-  visibility: hidden;
-}
-
-.text-box .fake-btn {
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
-  color: #fff;
-  background-color: rgb(21, 161, 237);
-  padding: 5px 8px;
-  border-radius: 3px;
-}
-
-.five p {
-  font-size: 2rem;
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-
-.idea-3 strong {
-  padding: 3px 5px;
-  border-radius: 3px;
-  display: inline-block;
-}
-
-.five .idea-5 {
-  font-size: 4rem;
-}
-
-.idea-5 span,
-.idea-6 span,
-.wish-hbd span {
-  display: inline-block;
+  cursor: pointer;
+  }  display: inline-block;
 }
 
 .idea-6 span {
