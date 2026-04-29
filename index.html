@@ -3,21 +3,22 @@
 <head>
   <title>Our 1 Year Garden 🌸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
-
 <!-- 🚲 BIKE SCENE -->
 <div id="bikeScene" class="scene active">
+  <div class="road"></div>
   <div class="bike">🚲</div>
-  <p id="startText">Tap to go to Garden</p>
-  <div class="wind"></div>
+  <p id="startText">Tap bike to enter our garden</p>
 </div>
 
 <!-- 🌸 GARDEN -->
 <div id="gardenScene" class="scene">
-  <div class="roof"></div>
+  <div class="roof-container">
+    <div class="roof"></div>
+  </div>
   <div class="flowers" id="flowerGrid"></div>
 </div>
 
