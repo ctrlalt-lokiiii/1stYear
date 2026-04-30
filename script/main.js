@@ -8,20 +8,17 @@ const backBtn = document.getElementById("backBtn");
 
 let opened = new Set();
 
-// 🌸 ORDER
 const keys = [
-  "whiteRose","rose","tulip","daisy","lavender",
-  "cherryBlossom","lily","bluebell","hibiscus",
-  "peony","orchid","marigold","sunflower"
+  "White Rose","Rose","Tulip","Daisy","Lavender",
+  "Cherry Blossom","Lily","Bluebell","Hibiscus",
+  "Peony","Orchid","Marigold","Sunflower"
 ];
 
-// 🌸 EMOJIS
 const emojis = ["🤍","🌹","🌷","🌼","💜","🌸","🤍","🔵","🌺","🌷","🌸","🟡","🌻"];
 
-// 🚲 CLICK BIKE
+/* 🚲 BIKE CLICK */
 document.querySelector(".bike").addEventListener("click", () => {
-  document.querySelector(".bike").style.transform =
-    "translateX(300px)";
+  document.querySelector(".road").classList.add("moving-road");
 
   setTimeout(()=>{
     bikeScene.classList.remove("active");
@@ -29,14 +26,29 @@ document.querySelector(".bike").addEventListener("click", () => {
   },3000);
 });
 
-// 🌸 CREATE FLOWERS
-keys.forEach((key, index)=>{
+/* 🌸 CREATE FLOWERS */
+keys.forEach((name, index)=>{
   const f = document.createElement("div");
   f.classList.add("flower");
-  f.innerText = emojis[index];
+
+  const icon = document.createElement("div");
+  icon.classList.add("flower-icon");
+  icon.innerText = emojis[index];
+
+  const label = document.createElement("div");
+  label.classList.add("flower-name");
+  label.innerText = name;
+
+  f.appendChild(icon);
+  f.appendChild(label);
 
   if(index === 12){
-    f.classList.add("locked","glow");
+    f.classList.add("locked");
+
+    const unlockText = document.createElement("div");
+    unlockText.classList.add("unlock-text");
+    unlockText.innerText = "Unlocks after 12 flowers";
+    f.appendChild(unlockText);
   }
 
   f.onclick = () => openFlower(index);
@@ -44,30 +56,10 @@ keys.forEach((key, index)=>{
   grid.appendChild(f);
 });
 
-// 💌 LETTERS (PUT YOUR TEXT HERE)
-const letters = {
-  whiteRose: `<h2>1ST MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  rose: `<h2>2ND MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  tulip: `<h2>3RD MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  daisy: `<h2>4TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  lavender: `<h2>5TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  cherryBlossom: `<h2>6TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  lily: `<h2>7TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  bluebell: `<h2>8TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  hibiscus: `<h2>9TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  peony: `<h2>10TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  orchid: `<h2>11TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  marigold: `<h2>12TH MONTH</h2><p>PASTE YOUR TEXT</p>`,
-  sunflower: `
-    <h2 style="text-align:center;">🌻 Final Message</h2>
-    <p>PASTE FINAL MESSAGE</p>
-    <p style="margin-top:20px; font-size:12px; opacity:0.6;">
-    🔒 Unlock after opening all flowers
-    </p>
-  `
-};
+/* 💌 LETTER PLACEHOLDER */
+const letters = {};
 
-// 🌸 OPEN FLOWER
+/* 🌸 OPEN FLOWER */
 function openFlower(index){
 
   if(index === 12 && opened.size < 12){
@@ -81,14 +73,16 @@ function openFlower(index){
   gardenScene.classList.remove("active");
   letterScene.classList.add("active");
 
-  letterContent.innerHTML = letters[keys[index]];
+  letterContent.innerHTML = letters[index] || "<p>Paste your letter here</p>";
 
   if(opened.size === 12){
-    document.querySelectorAll(".flower")[12].classList.remove("locked");
+    const finalFlower = document.querySelectorAll(".flower")[12];
+    finalFlower.classList.remove("locked");
+    finalFlower.classList.add("glow"); // 🌻 glow when unlocked
   }
 }
 
-// 🔙 BACK
+/* 🔙 BACK */
 backBtn.onclick = ()=>{
   letterScene.classList.remove("active");
   gardenScene.classList.add("active");
