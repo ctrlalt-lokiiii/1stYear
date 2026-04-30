@@ -22,8 +22,6 @@ window.addEventListener("load", () => {
   const road = document.querySelector(".road");
   const wind = document.querySelector(".wind-lines");
   const dust = document.querySelector(".dust");
-  const bikeScene = document.getElementById("bikeScene");
-  const gardenScene = document.getElementById("gardenScene");
 
   if (!bike) {
     console.log("Bike not found");
