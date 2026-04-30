@@ -18,12 +18,20 @@ const emojis = ["🤍","🌹","🌷","🌼","💜","🌸","🤍","🔵","🌺","
 
 /* 🚲 BIKE CLICK */
 document.querySelector(".bike").addEventListener("click", () => {
-  document.querySelector(".road").classList.add("moving-road");
+  const bike = document.querySelector(".bike");
+  const road = document.querySelector(".road");
 
-  setTimeout(()=>{
+  // start road animation
+  road.classList.add("moving-road");
+
+  // move bike to right + fade
+  bike.style.transform = "translateX(150%) scaleX(-1)";
+  bike.style.opacity = "0";
+
+  setTimeout(() => {
     bikeScene.classList.remove("active");
     gardenScene.classList.add("active");
-  },3000);
+  }, 2000);
 });
 
 /* 🌸 CREATE FLOWERS */
