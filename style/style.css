@@ -19,14 +19,14 @@ body {
 }
 
 /* 🚲 BIKE */
-.bike {
+  .bike {
+  z-index: 10;
+  cursor: pointer;
   font-size: 35vw;
   position: absolute;
   bottom: 90px;
   left: 50%;
   transform: translateX(-50%) scaleX(-1);
-  cursor: pointer;
-  z-index: 10;
 
   transition: transform 2s ease, opacity 2s ease;
 }
