@@ -179,21 +179,24 @@ body {
 
 .main-title {
   position: absolute;
-  top: 40px;
-  font-size: 28px;
-  font-family: 'Playfair Display', serif;
+  top: 30px;
+  width: 100%;
   text-align: center;
+  font-size: 30px;
+  font-family: 'Playfair Display', serif;
+  z-index: 5;
 }
 
 .clouds {
   position: absolute;
-  top: 80px;
+  top: 100px; /* 👈 pushes clouds below title */
   width: 100%;
+  z-index: 1;
 }
 
 .cloud {
-  width: 60px;
-  height: 30px;
+  width: 90px;   /* 👈 bigger */
+  height: 45px;
   background: white;
   border-radius: 50px;
   position: absolute;
@@ -201,26 +204,14 @@ body {
   animation: floatCloud 6s ease-in-out infinite;
 }
 
-.cloud::before,
-.cloud::after {
-  content: "";
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-}
-
 .cloud::before {
-  width: 30px;
-  height: 30px;
-  top: -10px;
-  left: 10px;
+  width: 45px;
+  height: 45px;
 }
 
 .cloud::after {
-  width: 40px;
-  height: 40px;
-  top: -15px;
-  left: 25px;
+  width: 60px;
+  height: 60px;
 }
 
 .cloud:nth-child(1) { left: 20%; animation-delay: 0s; }
