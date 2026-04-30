@@ -17,23 +17,27 @@ const keys = [
 const emojis = ["🤍","🌹","🌷","🌼","💜","🌸","🤍","🔵","🌺","🌷","🌸","🟡","🌻"];
 
 /* 🚲 BIKE CLICK */
-document.querySelector(".bike").addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const bike = document.querySelector(".bike");
   const road = document.querySelector(".road");
   const wind = document.querySelector(".wind-lines");
   const dust = document.querySelector(".dust");
+  const bikeScene = document.getElementById("bikeScene");
+  const gardenScene = document.getElementById("gardenScene");
 
-  road.classList.add("moving-road");
-  wind.classList.add("active");
-  dust.classList.add("active");
+  bike.addEventListener("click", () => {
+    road.classList.add("moving-road");
+    wind.classList.add("active");
+    dust.classList.add("active");
 
-  bike.style.transform = "translateX(150%) scaleX(-1)";
-  bike.style.opacity = "0";
+    bike.style.transform = "translateX(150%) scaleX(-1)";
+    bike.style.opacity = "0";
 
-  setTimeout(() => {
-    bikeScene.classList.remove("active");
-    gardenScene.classList.add("active");
-  }, 2000);
+    setTimeout(() => {
+      bikeScene.classList.remove("active");
+      gardenScene.classList.add("active");
+    }, 2000);
+  });
 });
   // start road animation
   road.classList.add("moving-road");
