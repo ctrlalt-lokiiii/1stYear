@@ -20,33 +20,53 @@ body {
 
 /* 🚲 BIKE */
 .bike {
-  font-size: 35vw; /* 🔥 bigger (30–40%) */
+  font-size: 35vw;
   position: absolute;
   bottom: 90px;
   left: 50%;
-  transform: translateX(-50%) scaleX(-1); /* 👉 mirrored RIGHT */
+  transform: translateX(-50%) scaleX(-1);
   cursor: pointer;
   z-index: 10;
-  transition: transform 3s linear;
+
+  transition: transform 2s ease, opacity 2s ease;
 }
 
 /* 🛣️ ROAD */
 .road {
   position: absolute;
-  bottom: 80px;
+  bottom: 70px;
   width: 100%;
-  height: 4px;
-  background: black;
-  z-index: 1;
+  height: 20px;
+  background: #333;
+  overflow: hidden;
 }
 
-.moving-road {
+/* white dashed line */
+.road::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  background: repeating-linear-gradient(
+    90deg,
+    white 0px,
+    white 20px,
+    transparent 20px,
+    transparent 40px
+  );
+}
+
+/* animate stripes */
+.moving-road::after {
   animation: roadMove 0.3s linear infinite;
 }
 
 @keyframes roadMove {
-  from { background-position: 0 0; }
-  to { background-position: -50px 0; }
+  from { transform: translateX(0) translateY(-50%); }
+  to { transform: translateX(-40px) translateY(-50%); }
 }
 
 /* tap text */
@@ -64,16 +84,24 @@ body {
 
 /* 🌸 ROOF (layered aesthetic) */
 .roof {
+  width: 0;
+  height: 0;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-bottom: 80px solid #8b5a2b;
+  margin-bottom: 10px;
   position: relative;
-  margin-bottom: 20px;
 }
 
-.roof-layer {
-  width: 220px;
-  height: 20px;
-  background: #8b5a2b;
-  margin: 5px auto;
-  border-radius: 5px;
+/* wooden lines effect */
+.roof::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: -120px;
+  width: 240px;
+  height: 5px;
+  background: rgba(255,255,255,0.2);
 }
 
 /* 🌸 FLOWERS */
