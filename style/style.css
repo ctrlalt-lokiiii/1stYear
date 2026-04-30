@@ -176,3 +176,116 @@ body {
   padding: 10px;
   cursor: pointer;
 }
+
+.main-title {
+  position: absolute;
+  top: 40px;
+  font-size: 28px;
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+}
+
+.clouds {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+}
+
+.cloud {
+  width: 60px;
+  height: 30px;
+  background: white;
+  border-radius: 50px;
+  position: absolute;
+  opacity: 0.8;
+  animation: floatCloud 6s ease-in-out infinite;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 30px;
+  height: 30px;
+  top: -10px;
+  left: 10px;
+}
+
+.cloud::after {
+  width: 40px;
+  height: 40px;
+  top: -15px;
+  left: 25px;
+}
+
+.cloud:nth-child(1) { left: 20%; animation-delay: 0s; }
+.cloud:nth-child(2) { left: 50%; animation-delay: 2s; }
+.cloud:nth-child(3) { left: 75%; animation-delay: 4s; }
+
+@keyframes floatCloud {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.wind-lines {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: none;
+}
+
+.wind-lines.active {
+  display: block;
+}
+
+.wind-lines::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 2px;
+  top: 60%;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.2) 20px,
+    transparent 20px,
+    transparent 40px
+  );
+  animation: windMove 0.3s linear infinite;
+}
+
+.dust {
+  position: absolute;
+  bottom: 80px;
+  left: 40%;
+  width: 60px;
+  height: 20px;
+  background: rgba(150,150,150,0.2);
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0;
+}
+
+.dust.active {
+  animation: dustMove 1s linear infinite;
+  opacity: 1;
+}
+
+@keyframes dustMove {
+  0% { transform: translateX(0); opacity: 0.5; }
+  100% { transform: translateX(-50px); opacity: 0; }
+}
+
+.garden-credit {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-family: 'Pacifico', cursive;
+  font-size: 14px;
+}
