@@ -207,6 +207,14 @@ body {
   animation: floatCloud 6s ease-in-out infinite;
 }
 
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
 .cloud::before {
   width: 55px;
   height: 55px;
