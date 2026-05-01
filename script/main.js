@@ -81,7 +81,8 @@ f.appendChild(lockIcon);
 // 💌 LETTERS (each flower has its own message)
 const letters = {
 
-  0: `CHECK WHITE ROSE`,
+  0: `1ST MONTH 
+our four first month was super special, babbyyyy. it honestly felt like something I only used to pray for before I sleep poo and suddenly, it was real in front of me. everything felt so soft, so new, so magical in a way I can’t even explain poo. we started healing ourselves from the pain and traumas that our past relationships and experiences gave us. slowly, without even forcing it, we started learning what love really feels like when it’s not one-sided or painful. we started learning each other’s likes, dislikes, habits, and little things that make us who we are. and honestly, babbyyyy, it felt amazing. it made me realize that this is what it feels like to be loved by someone who actually loves you back the same way. I couldn’t even wrap my head around it at first. I kept thinking maybe I’m just dreaming maybe this isn’t real maybe I’ll wake up and it’s gone. but it wasn’t a dream poo. we proved to each other that we are worthy of love. and somehow, that made everything even more beautiful and even more romantic poo because it wasn’t perfect love, it was real love that we both chose. `,
 
   1: `CHECK ROSE`,
 
