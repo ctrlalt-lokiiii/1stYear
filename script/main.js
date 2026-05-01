@@ -16,46 +16,39 @@ const keys = [
 
 const emojis = ["🤍","🌹","🌷","🌼","💜","🌸","🤍","🔵","🌺","🌷","🌸","🟡","🌻"];
 
-/* 🚲 BIKE CLICK */
+
+// 🚲 BIKE CLICK (FIXED)
 window.addEventListener("load", () => {
   const bike = document.querySelector(".bike");
   const road = document.querySelector(".road");
   const wind = document.querySelector(".wind-lines");
   const dust = document.querySelector(".dust");
 
-  if (!bike) {
-    console.log("Bike not found");
+  if (!bike || !road) {
+    console.log("Missing elements");
     return;
   }
 
   bike.addEventListener("click", () => {
+    // start animations
     road.classList.add("moving-road");
     wind.classList.add("active");
     dust.classList.add("active");
 
+    // move bike to right + fade
     bike.style.transform = "translateX(150%) scaleX(-1)";
     bike.style.opacity = "0";
 
+    // go to garden
     setTimeout(() => {
       bikeScene.classList.remove("active");
       gardenScene.classList.add("active");
     }, 2000);
   });
 });
-  // start road animation
-  road.classList.add("moving-road");
 
-  // move bike to right + fade
-  bike.style.transform = "translateX(150%) scaleX(-1)";
-  bike.style.opacity = "0";
 
-  setTimeout(() => {
-    bikeScene.classList.remove("active");
-    gardenScene.classList.add("active");
-  }, 2000);
-});
-
-/* 🌸 CREATE FLOWERS */
+// 🌸 CREATE FLOWERS
 keys.forEach((name, index)=>{
   const f = document.createElement("div");
   f.classList.add("flower");
@@ -85,10 +78,12 @@ keys.forEach((name, index)=>{
   grid.appendChild(f);
 });
 
-/* 💌 LETTER PLACEHOLDER */
+
+// 💌 LETTER PLACEHOLDER
 const letters = {};
 
-/* 🌸 OPEN FLOWER */
+
+// 🌸 OPEN FLOWER
 function openFlower(index){
 
   if(index === 12 && opened.size < 12){
@@ -107,11 +102,12 @@ function openFlower(index){
   if(opened.size === 12){
     const finalFlower = document.querySelectorAll(".flower")[12];
     finalFlower.classList.remove("locked");
-    finalFlower.classList.add("glow"); // 🌻 glow when unlocked
+    finalFlower.classList.add("glow");
   }
 }
 
-/* 🔙 BACK */
+
+// 🔙 BACK
 backBtn.onclick = ()=>{
   letterScene.classList.remove("active");
   gardenScene.classList.add("active");
